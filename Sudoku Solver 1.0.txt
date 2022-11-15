@@ -1,0 +1,455 @@
+import random
+#to copy [0,0,0,0,0,0,0,0,0]
+line1=[2,3,0,5,0,7,4,0,6]
+line2=[0,0,0,0,3,1,0,0,0]
+line3=[0,0,0,0,0,0,2,3,0]
+line4=[0,0,0,0,2,0,0,0,0]
+line5=[8,6,0,3,1,0,0,0,0]
+line6=[0,4,5,0,0,0,0,0,0]
+line7=[0,0,9,0,0,0,7,0,0]
+line8=[0,0,9,6,5,0,0,0,2]
+line9=[0,0,1,0,0,6,0,0,8]
+line1=line1+line1+line1
+line2=line2+line2+line2
+line3=line3+line3+line3
+line4=line4+line4+line4
+line5=line5+line5+line5
+line6=line6+line6+line6
+line7=line7+line7+line7
+line8=line8+line8+line8
+line9=line9+line9+line9
+try_list=[1,2,3,4,5,6,7,8,9]
+
+temp_sudoku=[line1,line2,line3,line4,line5,line6,line7,line8,line9]
+sudoku=temp_sudoku
+
+
+lock_hor_0=0
+lock_hor_1=0
+lock_hor_2=0
+lock_hor_3=0
+lock_hor_4=0
+lock_hor_5=0
+lock_hor_6=0
+lock_hor_7=0
+lock_hor_8=0
+lock_ver_0=0
+lock_ver_1=0
+lock_ver_2=0
+lock_ver_3=0
+lock_ver_4=0
+lock_ver_5=0
+lock_ver_6=0
+lock_ver_7=0
+lock_ver_8=0
+locks=[]
+antiloop=0
+def show_sudoku():
+    for i in range(9):
+        print(temp_sudoku[i][9:18])
+def show_temp_sudoku():
+    for i in range(9):
+        print(temp_sudoku[i][0:9])
+print("Start sudoku")
+show_sudoku()
+#verticaly - pionowo
+def update_clear_sudoku():
+    for i in range(9):
+        for j in range(9):
+            sudoku[i][j+18]=sudoku[i][j+9]
+def find_slots(x):
+    global locks
+    for i in range(9):
+        for j in range(9):
+            if(temp_sudoku[i][j]==x):
+                if(i<=2):
+                    if(j<=2):
+                        temp_sudoku[0][0]="X"
+                        temp_sudoku[0][1]="X"
+                        temp_sudoku[0][2]="X"
+                        temp_sudoku[1][0]="X"
+                        temp_sudoku[1][1]="X"
+                        temp_sudoku[1][2]="X"
+                        temp_sudoku[2][0]="X"
+                        temp_sudoku[2][1]="X"
+                        temp_sudoku[2][2]="X"
+                    elif(j<=5):
+                        temp_sudoku[0][3]="X"
+                        temp_sudoku[0][4]="X"
+                        temp_sudoku[0][5]="X"
+                        temp_sudoku[1][3]="X"
+                        temp_sudoku[1][4]="X"
+                        temp_sudoku[1][5]="X"
+                        temp_sudoku[2][3]="X"
+                        temp_sudoku[2][4]="X"
+                        temp_sudoku[2][5]="X"
+                    elif(j<=8):
+                        temp_sudoku[0][6]="X"
+                        temp_sudoku[0][7]="X"
+                        temp_sudoku[0][8]="X"
+                        temp_sudoku[1][6]="X"
+                        temp_sudoku[1][7]="X"
+                        temp_sudoku[1][8]="X"
+                        temp_sudoku[2][6]="X"
+                        temp_sudoku[2][7]="X"
+                        temp_sudoku[2][8]="X"
+                    else:
+                        pass
+                elif(i<=5):
+                    if(j<=2):
+                        temp_sudoku[3][0]="X"
+                        temp_sudoku[3][1]="X"
+                        temp_sudoku[3][2]="X"
+                        temp_sudoku[4][0]="X"
+                        temp_sudoku[4][1]="X"
+                        temp_sudoku[4][2]="X"
+                        temp_sudoku[5][0]="X"
+                        temp_sudoku[5][1]="X"
+                        temp_sudoku[5][2]="X"
+                    elif(j<=5):
+                        temp_sudoku[3][3]="X"
+                        temp_sudoku[3][4]="X"
+                        temp_sudoku[3][5]="X"
+                        temp_sudoku[4][3]="X"
+                        temp_sudoku[4][4]="X"
+                        temp_sudoku[4][5]="X"
+                        temp_sudoku[5][3]="X"
+                        temp_sudoku[5][4]="X"
+                        temp_sudoku[5][5]="X"
+                    elif(j<=8):
+                        temp_sudoku[3][6]="X"
+                        temp_sudoku[3][7]="X"
+                        temp_sudoku[3][8]="X"
+                        temp_sudoku[4][6]="X"
+                        temp_sudoku[4][7]="X"
+                        temp_sudoku[4][8]="X"
+                        temp_sudoku[5][6]="X"
+                        temp_sudoku[5][7]="X"
+                        temp_sudoku[5][8]="X"
+                    else:
+                        pass
+                elif(i<=8):
+                    if(j<=2):
+                        temp_sudoku[6][0]="X"
+                        temp_sudoku[6][1]="X"
+                        temp_sudoku[6][2]="X"
+                        temp_sudoku[7][0]="X"
+                        temp_sudoku[7][1]="X"
+                        temp_sudoku[7][2]="X"
+                        temp_sudoku[8][0]="X"
+                        temp_sudoku[8][1]="X"
+                        temp_sudoku[8][2]="X"
+                    elif(j<=5):
+                        temp_sudoku[6][3]="X"
+                        temp_sudoku[6][4]="X"
+                        temp_sudoku[6][5]="X"
+                        temp_sudoku[7][3]="X"
+                        temp_sudoku[7][4]="X"
+                        temp_sudoku[7][5]="X"
+                        temp_sudoku[8][3]="X"
+                        temp_sudoku[8][4]="X"
+                        temp_sudoku[8][5]="X"
+                    elif(j<=8):
+                        temp_sudoku[6][6]="X"
+                        temp_sudoku[6][7]="X"
+                        temp_sudoku[6][8]="X"
+                        temp_sudoku[7][6]="X"
+                        temp_sudoku[7][7]="X"
+                        temp_sudoku[7][8]="X"
+                        temp_sudoku[8][6]="X"
+                        temp_sudoku[8][7]="X"
+                        temp_sudoku[8][8]="X"
+                    else:
+                        pass
+                else:
+                    pass
+            else:
+                pass
+    for i in range(9):
+        for j in range(9):
+            if(locks[i]==1 or locks[j+9]==1):
+                temp_sudoku[i][j]="X"
+    for i in range(9):
+        for j in range(9):
+            if(temp_sudoku[i][j]==0):
+                pass
+            else:
+                temp_sudoku[i][j]="X"
+def fill_slots(x):
+    global antiloop
+    for i in range(3):
+        for j in range(3):
+            X1=temp_sudoku[3*i][3*j:3*j+3].count("X")
+            X2=temp_sudoku[3*i+1][3*j:3*j+3].count("X")
+            X3=temp_sudoku[3*i+2][3*j:3*j+3].count("X")
+            Xsummed=X1+X2+X3
+            if(Xsummed==8):
+                antiloop=1
+                if(0 in temp_sudoku[3*i][3*j:3*j+3]):
+                    if(0 == temp_sudoku[3*i][3*j]):
+                        temp_sudoku[3*i][9+3*j]=x
+                    if(0 == temp_sudoku[3*i][3*j+1]):
+                        temp_sudoku[3*i][9+3*j+1]=x
+                    if(0 == temp_sudoku[3*i][3*j+2]):
+                        temp_sudoku[3*i][9+3*j+2]=x
+                if(0 in temp_sudoku[3*i+1][3*j:3*j+3]):
+                    if(0 == temp_sudoku[3*i+1][3*j]):
+                        temp_sudoku[3*i+1][9+3*j]=x
+                    if(0 == temp_sudoku[3*i+1][3*j+1]):
+                        temp_sudoku[3*i+1][9+3*j+1]=x
+                    if(0 == temp_sudoku[3*i+1][3*j+2]):
+                        temp_sudoku[3*i+1][9+3*j+2]=x
+                if(0 in temp_sudoku[3*i+2][3*j:3*j+3]):
+                    if(0 == temp_sudoku[3*i+2][3*j]):
+                        temp_sudoku[3*i+2][9+3*j]=x
+                    if(0 == temp_sudoku[3*i+2][3*j+1]):
+                        temp_sudoku[3*i+2][9+3*j+1]=x
+                    if(0 == temp_sudoku[3*i+2][3*j+2]):
+                        temp_sudoku[3*i+2][9+3*j+2]=x
+            X1=0
+            X2=0
+            X3=0
+def check_over(x):
+    global lock_hor_0
+    global lock_hor_1
+    global lock_hor_2
+    global lock_hor_3
+    global lock_hor_4
+    global lock_hor_5
+    global lock_hor_6
+    global lock_hor_7
+    global lock_hor_8
+    global lock_ver_0
+    global lock_ver_1
+    global lock_ver_2
+    global lock_ver_3
+    global lock_ver_4
+    global lock_ver_5
+    global lock_ver_6
+    global lock_ver_7
+    global lock_ver_8
+    if(x in sudoku[0]):
+        lock_hor_0=1
+    if(x in sudoku[1]):
+        lock_hor_1=1
+    if(x in sudoku[2]):
+        lock_hor_2=1
+    if(x in sudoku[3]):
+        lock_hor_3=1
+    if(x in sudoku[4]):
+        lock_hor_4=1
+    if(x in sudoku[5]):
+        lock_hor_5=1
+    if(x in sudoku[6]):
+        lock_hor_6=1
+    if(x in sudoku[7]):
+        lock_hor_7=1
+    if(x in sudoku[8]):
+        lock_hor_8=1
+    for i in range(9):
+        if(x == sudoku[i][0]):
+            lock_ver_0=1
+    for i in range(9):
+        if(x == sudoku[i][1]):
+            lock_ver_1=1
+    for i in range(9):
+        if(x == sudoku[i][2]):
+            lock_ver_2=1
+    for i in range(9):
+        if(x == sudoku[i][3]):
+            lock_ver_3=1
+    for i in range(9):
+        if(x == sudoku[i][4]):
+            lock_ver_4=1
+    for i in range(9):
+        if(x == sudoku[i][5]):
+            lock_ver_5=1
+    for i in range(9):
+        if(x == sudoku[i][6]):
+            lock_ver_6=1
+    for i in range(9):
+        if(x == sudoku[i][7]):
+            lock_ver_7=1
+    for i in range(9):
+        if(x == sudoku[i][8]):
+            lock_ver_8=1
+def create_locks():
+    global lock_hor_0
+    global lock_hor_1
+    global lock_hor_2
+    global lock_hor_3
+    global lock_hor_4
+    global lock_hor_5
+    global lock_hor_6
+    global lock_hor_7
+    global lock_hor_8
+    global lock_ver_0
+    global lock_ver_1
+    global lock_ver_2
+    global lock_ver_3
+    global lock_ver_4
+    global lock_ver_5
+    global lock_ver_6
+    global lock_ver_7
+    global lock_ver_8
+    global locks
+    
+    locks=[
+    lock_hor_0
+    ,lock_hor_1
+    ,lock_hor_2
+    ,lock_hor_3
+    ,lock_hor_4
+    ,lock_hor_5
+    ,lock_hor_6
+    ,lock_hor_7
+    ,lock_hor_8
+    ,lock_ver_0
+    ,lock_ver_1
+    ,lock_ver_2
+    ,lock_ver_3
+    ,lock_ver_4
+    ,lock_ver_5
+    ,lock_ver_6
+    ,lock_ver_7
+    ,lock_ver_8]
+def clear():
+    for i in range(9):
+        for j in range(9):
+            temp_sudoku[i][j]=temp_sudoku[i][j+9]
+def unlock():
+    global lock_hor_0
+    global lock_hor_1
+    global lock_hor_2
+    global lock_hor_3
+    global lock_hor_4
+    global lock_hor_5
+    global lock_hor_6
+    global lock_hor_7
+    global lock_hor_8
+    global lock_ver_0
+    global lock_ver_1
+    global lock_ver_2
+    global lock_ver_3
+    global lock_ver_4
+    global lock_ver_5
+    global lock_ver_6
+    global lock_ver_7
+    global lock_ver_8
+    global locks
+    lock_hor_0=0
+    lock_hor_1=0
+    lock_hor_2=0
+    lock_hor_3=0
+    lock_hor_4=0
+    lock_hor_5=0
+    lock_hor_6=0
+    lock_hor_7=0
+    lock_hor_8=0
+    lock_ver_0=0
+    lock_ver_1=0
+    lock_ver_2=0
+    lock_ver_3=0
+    lock_ver_4=0
+    lock_ver_5=0
+    lock_ver_6=0
+    lock_ver_7=0
+    lock_ver_8=0
+    locks=[
+    lock_hor_0
+    ,lock_hor_1
+    ,lock_hor_2
+    ,lock_hor_3
+    ,lock_hor_4
+    ,lock_hor_5
+    ,lock_hor_6
+    ,lock_hor_7
+    ,lock_hor_8
+    ,lock_ver_0
+    ,lock_ver_1
+    ,lock_ver_2
+    ,lock_ver_3
+    ,lock_ver_4
+    ,lock_ver_5
+    ,lock_ver_6
+    ,lock_ver_7
+    ,lock_ver_8]
+def random_solve_try():
+    global temp_sudoku
+    break_random=0
+    while(1>0):
+        i=random.randint(0,8)
+        j=random.randint(0,8)
+        if(temp_sudoku[i][j]==0):
+            print("Field:",i,j)
+            break
+    temp_sudoku[i][j]=random.randint(1,9)
+    solve()
+def check_if_full():
+    global full
+    for i in range(9):
+        for j in range(9):
+            if(temp_sudoku[i][j]==0):
+                full=0
+                break
+            else:
+                full=1
+def back_to_semi_solved():
+    for i in range(9):
+        for j in range(9):
+            temp_sudoku[i][j]=temp_sudoku[i][j+18]
+no=1
+def solve():
+    global lock_hor_0
+    global lock_hor_1
+    global lock_hor_2
+    global lock_hor_3
+    global lock_hor_4
+    global lock_hor_5
+    global lock_hor_6
+    global lock_hor_7
+    global lock_hor_8
+    global lock_ver_0
+    global lock_ver_1
+    global lock_ver_2
+    global lock_ver_3
+    global lock_ver_4
+    global lock_ver_5
+    global lock_ver_6
+    global lock_ver_7
+    global lock_ver_8
+    global no
+    global temp_sudoku
+    global sudoku
+    global antiloop
+    global try_num
+    while(1>0):
+        antiloop=0
+        no=1
+        for i in range(1,9+1):
+            check_over(no)
+            create_locks()
+            find_slots(no)
+            fill_slots(no)
+            clear()
+            unlock()
+            no=no+1
+        print(no,antiloop)
+        if(no==10 and antiloop==0):
+            print("Break Point")
+            break
+        else:
+            print("Continue")
+
+
+full=0
+solve()
+while(full==0):
+    check_if_full()
+    if(full==1):
+        print("FULL")
+        show_sudoku()
+        break
+    else:
+        back_to_semi_solved()
+        random_solve_try()
